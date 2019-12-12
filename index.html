@@ -8,6 +8,21 @@
 <body>
     <div class="fusion-blog-layout-timeline fusion-clearfix">
 
+        <h3 class="fusion-timeline-date">September 2020</h3>
+        <div class="fusion-collapse-month">
+            <p>Block 1</p>
+        </div>
+
+        <h3 class="fusion-timeline-date">June 2020</h3>
+        <div class="fusion-collapse-month">
+            <p>Block 2</p>
+        </div>
+
+        <h3 class="fusion-timeline-date">March 2020</h3>
+        <div class="fusion-collapse-month">
+            <p>Block 2</p>
+        </div>
+
         <h3 class="fusion-timeline-date">February 2020</h3>
         <div class="fusion-collapse-month">
             <p>Block 1</p>
@@ -28,19 +43,20 @@
             <p>Block 2</p>
         </div>
     </div>
-    <script src="https://rawgit.com/moment/moment/2.24.0/min/moment.min.js"></script>
+    <script src="https://rawgit.com/moment/moment/2.22.2/min/moment.min.js"></script>
     <script>
-        const allH3 = document.querySelectorAll('.fusion-timeline-date');
-
-        const allDates = [];
-        for(let i=0; i < allH3.length; i++){
-            let a = moment(allH3[i].innerHTML).format('MMMM YY');
-            allDates.push(a);
+        const dateElements = Array.from(
+            document.querySelectorAll(".fusion-timeline-date")
+        ).sort(
+            (a, b) =>
+                moment(a.innerText, "MMMM YYYY") - moment(b.innerText, "MMMM YYYY")
+        );
+        const currentDateElement = dateElements.find(i => {
+            return moment(i.innerText, "MMMM YYYY").unix() >= moment().unix();
+        });
+        if (currentDateElement) {
+            currentDateElement.classList.add("current-date");
         }
-
-        const diff = allDates.map(d => Math.abs(new Date() - new Date(d)));
-        const idx = diff.indexOf(Math.min(...diff));
-        document.querySelectorAll('.fusion-timeline-date')[idx].classList.add("current-date")
         const scrollTo = document.getElementsByClassName('current-date')[0];
         scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start'});
     </script>
