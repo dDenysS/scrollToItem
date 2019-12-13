@@ -52,13 +52,23 @@
                 moment(a.innerText, "MMMM YYYY") - moment(b.innerText, "MMMM YYYY")
         );
         const currentDateElement = dateElements.find(i => {
-            return moment(i.innerText, "MMMM YYYY").unix() >= moment().unix();
+            if (
+                moment(i.innerText, "MMMM YYYY").format("MMMM YYYY") ===
+                moment().format("MMMM YYYY")
+            ) {
+                return moment().format("MMMM YYYY");
+            } else if (
+                moment(i.innerText, "MMMM YYYY").isAfter(moment())
+            ) {
+                return moment(i.innerText, "MMMM YYYY").format("MMMM YYYY");
+            }
         });
+
         if (currentDateElement) {
             currentDateElement.classList.add("current-date");
+            const scrollTo = document.getElementsByClassName('current-date')[0];
+            scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start'});
         }
-        const scrollTo = document.getElementsByClassName('current-date')[0];
-        scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start'});
     </script>
 </body>
 </html>
