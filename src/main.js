@@ -11,7 +11,7 @@ for (let i = 0; i < dateElements.length; i++) {
     const currItemDate = moment(dateElements[i].innerText, 'MMMM YYYY')
 
     if (currItemDate.isAfter(moment()) || currItemDate.isSame(moment())) {
-        currentDateElement = dateElements[i + 1 <= dateElements.length ? i + 1 : i]
+        currentDateElement = dateElements[i]
         break
     }
 }
