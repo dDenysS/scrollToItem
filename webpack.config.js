@@ -1,11 +1,14 @@
 const path = require('path')
+const UnminifiedWebpackPlugin = require('unminified-webpack-plugin')
+const MomentLocalesPlugin = require(`moment-locales-webpack-plugin`)
 
 module.exports = {
-    mode: 'development',
+    mode: process.env.production ? 'development' : 'production',
     entry: './src/main.js',
     output: {
         filename: 'bundle.js',
         path: path.join(__dirname, 'public/js')
+
     },
     devtool: 'source-map',
     devServer: {
@@ -24,5 +27,14 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new UnminifiedWebpackPlugin({
+            include: /\.min\.js$/,
+            minimize: true
+        }),
+        new MomentLocalesPlugin({
+            localesToKeep: [`es-us`],
+        })
+    ]
 }
